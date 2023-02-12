@@ -57,8 +57,8 @@ pub fn print_function(
             let inst = function.data.inst_ref(inst);
             if Opcode::MSTOREr == inst.data.opcode {
                 if matches!(&inst.data.operands[0].data, OperandData::Reg(Reg(0,8))) && 
-                    matches!(&inst.data.operands[1].data, OperandData::Reg(Reg(0,7))) {
-                        write!(f, "  mstore [r8,-2] r7")?;
+                    matches!(&inst.data.operands[1].data, OperandData::Reg(Reg(0,8))) {
+                        write!(f, "  mstore [r8,-2] r8")?;
                         writeln!(f)?;
                         continue;
                 }

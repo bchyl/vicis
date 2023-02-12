@@ -41,9 +41,10 @@ const ARG_REGS: [RegUnit; 3] = [
     RegUnit(RegClass::GR as u16, GR::R3 as u16),
 ];
 
-const CSR: [RegUnit; 2] = [
+const CSR: [RegUnit; 3] = [
     RegUnit(RegClass::GR as u16, GR::R4 as u16),
     RegUnit(RegClass::GR as u16, GR::R5 as u16),
+    RegUnit(RegClass::GR as u16, GR::R7 as u16),
 ];
 
 impl RegisterInfo for RegInfo {

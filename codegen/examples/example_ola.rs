@@ -27,7 +27,7 @@ fn main() {
     // Compile the module for x86 and get a machine module
     let isa = Ola::default();
     let mach_module = compile_module(&isa, &module).expect("failed to compile");
-    println!("{}",mach_module.display_asm());
+    // println!("{}",mach_module.display_asm());
 
     // Display the machine module as assembly
     assert_eq!(
@@ -35,7 +35,8 @@ fn main() {
         "main:
 .LBL0_0:
   add r8 r8 1
-  mstore [r8,-1] 10
+  mov r4 10
+  mstore [r8,-1] r4
   mload r4 [r8,-1]
   add r0 r4 20
   add r1 r4 30

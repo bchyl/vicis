@@ -60,7 +60,7 @@ pub fn run_on_function(function: &mut Function<Ola>) {
                 opcode: Opcode::MSTOREr,
                 operands: vec![
                     Operand::output(GR::R8.into()),
-                    Operand::input(GR::R7.into()),
+                    Operand::input(GR::R8.into()),
                 ],
             },
             entry,
@@ -81,20 +81,6 @@ pub fn run_on_function(function: &mut Function<Ola>) {
             entry,
         ));
         function.layout.insert_inst_at_start(sub, entry);
-    }
-
-    if call {
-        let mov = function.data.create_inst(Instruction::new(
-            InstructionData {
-                opcode: Opcode::MOVrr,
-                operands: vec![
-                    Operand::output(GR::R7.into()),
-                    Operand::input(GR::R8.into()),
-                ],
-            },
-            entry,
-        ));
-        function.layout.insert_inst_at_start(mov, entry);
     }
 
     // insert epilogue

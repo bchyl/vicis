@@ -7,6 +7,22 @@ fn main() {
   source_filename = "asm" 
 
   ; Function Attrs: noinline nounwind optnone ssp uwtable
+  define void @main() #0 {
+    %1 = alloca i32, align 4
+    %2 = alloca i32, align 4
+    %3 = alloca i32, align 4
+    store i32 10, i32* %1, align 4
+    store i32 20, i32* %2, align 4
+    store i32 100, i32* %3, align 4
+    %4 = load i32, i32* %1, align 4
+    %5 = load i32, i32* %2, align 4
+    %6 = call i32 @bar(i32 %4, i32 %5)
+    store i32 %6, i32* %3, align 4
+    %7 = load i32, i32* %3, align 4
+    ret void
+  }
+
+  ; Function Attrs: noinline nounwind optnone ssp uwtable
   define i32 @bar(i32 %0, i32 %1) #0 {
     %3 = alloca i32, align 4
     %4 = alloca i32, align 4
@@ -20,22 +36,6 @@ fn main() {
     store i32 %8, i32* %5, align 4
     %9 = load i32, i32* %5, align 4
     ret i32 %9
-  }
-  
-  ; Function Attrs: noinline nounwind optnone ssp uwtable
-  define i32 @foo() #0 {
-    %1 = alloca i32, align 4
-    %2 = alloca i32, align 4
-    %3 = alloca i32, align 4
-    store i32 10, i32* %1, align 4
-    store i32 20, i32* %2, align 4
-    store i32 100, i32* %3, align 4
-    %4 = load i32, i32* %1, align 4
-    %5 = load i32, i32* %2, align 4
-    %6 = call i32 @bar(i32 %4, i32 %5)
-    store i32 %6, i32* %3, align 4
-    %7 = load i32, i32* %3, align 4
-    ret i32 %7
   }  
 "#;
 
@@ -45,27 +45,46 @@ fn main() {
     // Compile the module for x86 and get a machine module
     let isa = Ola::default();
     let mach_module = compile_module(&isa, &module).expect("failed to compile");
-    println!("{}",mach_module.display_asm());
+    // println!("{}",mach_module.display_asm());
 
     // Display the machine module as assembly
-    /*assert_eq!(
+    assert_eq!(
         format!("{}", mach_module.display_asm()),
         "main:
 .LBL0_0:
-  add r8 r8 1
-  mstore [r8,-1] 10
-  mload r4 [r8,-1]
-  add r0 r4 20
-  add r1 r4 30
-  mul r2 r0 r1
-  not r6 r1
+  add r8 r8 5
+  mstore [r8,-2] r8
+  mov r0 10
+  mstore [r8,-5] r0
+  mov r0 20
+  mstore [r8,-4] r0
+  mov r0 100
+  mstore [r8,-3] r0
+  mload r1 [r8,-5]
+  mload r2 [r8,-4]
+  call bar
+  mstore [r8,-3] r0
+  mload r0 [r8,-3]
+  not r6 5
   add r6 r6 1
-  add r3 r2 r6
-  mov r0 r3
-  not r6 1
+  add r8 r8 r6
+  end 
+bar:
+.LBL1_0:
+  add r8 r8 3
+  mstore [r8,-3] r1
+  mstore [r8,-2] r2
+  mov r1 200
+  mstore [r8,-1] r1
+  mload r1 [r8,-3]
+  mload r2 [r8,-2]
+  add r0 r1 r2
+  mstore [r8,-1] r0
+  mload r0 [r8,-1]
+  not r6 3
   add r6 r6 1
   add r8 r8 r6
   ret 
 "
-    );*/
+    );
 }
