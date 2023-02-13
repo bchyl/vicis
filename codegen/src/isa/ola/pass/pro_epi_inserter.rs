@@ -101,7 +101,7 @@ pub fn run_on_function(function: &mut Function<Ola>) {
                 InstructionData {
                     opcode: Opcode::NOT,
                     operands: vec![
-                        Operand::input_output(GR::R6.into()),
+                        Operand::input_output(GR::R7.into()),
                         Operand::input(adj.into()),
                     ],
                 },
@@ -113,8 +113,8 @@ pub fn run_on_function(function: &mut Function<Ola>) {
                 InstructionData {
                     opcode: Opcode::ADDri,
                     operands: vec![
-                        Operand::output(GR::R6.into()),
-                        Operand::input_output(GR::R6.into()),
+                        Operand::output(GR::R7.into()),
+                        Operand::input_output(GR::R7.into()),
                         Operand::input(OperandData::Int64(1)),
                     ],
                 },
@@ -128,7 +128,7 @@ pub fn run_on_function(function: &mut Function<Ola>) {
                     operands: vec![
                         Operand::output(GR::R8.into()),
                         Operand::input_output(GR::R8.into()),
-                        Operand::input(GR::R6.into()),
+                        Operand::input(GR::R7.into()),
                     ],
                 },
                 block,

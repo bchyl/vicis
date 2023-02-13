@@ -66,7 +66,7 @@ pub fn print_function(
             if inst.data.is_call() {
                 main_call = true;
             }
-            if main_call && Opcode::RET == inst.data.opcode {  
+            if function.ir.name() == "main" && main_call && Opcode::RET == inst.data.opcode {  
                 write!(f, "  end ")?;                              
             } else {
                 write!(f, "  {} ", inst.data.opcode)?;
@@ -111,14 +111,17 @@ impl fmt::Display for Opcode {
                 Self::ADDri | Self::ADDrr => "add",
                 Self::MULri | Self::MULrr => "mul",
                 Self::MOVri | Self::MOVrr => "mov",
-                Self::CMPri | Self::CMPrr => "cmp",
                 Self::JMPi | Self::JMPr => "jmp",
+                Self::CJMPi | Self::CJMPr => "cjmp",
                 Self::CALL => "call",
                 Self::RET => "ret",
                 Self::Phi => "PHI",
                 Self::MLOADi | Self::MLOADr => "mload",
                 Self::MSTOREi | Self::MSTOREr => "mstore",
                 Self::NOT => "not",
+                Self::GTE => "gte",
+                Self::NEQ => "neq",
+                Self::EQri | Self::EQrr => "eq",
                 e => todo!("{:?}", e),
             }
         )

@@ -27,7 +27,7 @@ fn main() {
     // Compile the module for x86 and get a machine module
     let isa = Ola::default();
     let mach_module = compile_module(&isa, &module).expect("failed to compile");
-    // println!("{}",mach_module.display_asm());
+    println!("{}",mach_module.display_asm());
 
     // Display the machine module as assembly
     assert_eq!(
@@ -41,13 +41,13 @@ fn main() {
   add r0 r4 20
   add r1 r4 30
   mul r2 r0 r1
-  not r6 r1
-  add r6 r6 1
-  add r3 r2 r6
+  not r7 r1
+  add r7 r7 1
+  add r3 r2 r7
   mov r0 r3
-  not r6 1
-  add r6 r6 1
-  add r8 r8 r6
+  not r7 1
+  add r7 r7 1
+  add r8 r8 r7
   ret 
 "
     );
